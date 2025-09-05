@@ -1,148 +1,84 @@
-Este proyecto demuestra la refactorización completa de un microservicio Java con Spring Boot, eliminando malas prácticas, aplicando principios de Clean Code y alcanzando alta cobertura de pruebas.
+# **Refactorización de Aplicación Spring Boot** 🧑‍💻
 
-🎯 Objetivos Alcanzados
+Este proyecto presenta la **refactorización completa** de una aplicación RESTful en Java con Spring Boot. El objetivo principal fue transformar un codebase inicial con malas prácticas en un sistema robusto, limpio y profesional, aplicando principios de **Clean Code** y **arquitectura sólida**.
 
-✅ Identificación y corrección de todas las malas prácticas en Controller, Service, Repository y Model.
+---
 
-✅ Aplicación de principios SOLID, DRY y Clean Code.
+## **Visión General y Logros Clave** 🎯
 
-✅ Código más legible, mantenible y robusto.
+El proyecto se centró en la mejora integral del código, abordando áreas críticas para la calidad del software. Los logros más importantes incluyen:
 
-✅ Pruebas unitarias completas con cobertura 89%+ en lógica de negocio.
+* **Aplicación de Principios SOLID y DRY**: Se eliminó la duplicidad de código y se mejoró la modularidad y el diseño de los componentes.
+* **Mejora de la Mantenibilidad**: El código es ahora significativamente más legible, fácil de entender y de mantener.
+* **Robustez y Manejo de Errores**: Se implementó un manejo de excepciones centralizado, lo que hace que la API sea más estable y predecible.
+* **Alta Cobertura de Pruebas**: Se lograron más del **89% de cobertura en la lógica de negocio**, lo que garantiza la fiabilidad del sistema.
 
-🚀 Características Clave
+---
 
-API REST profesional con endpoints claros y consistentes
+## **Características de la Implementación** 🛠️
 
-Validación de datos con Bean Validation (@Valid)
+La refactorización incorporó las siguientes características y buenas prácticas:
 
-Manejo centralizado de excepciones con @RestControllerAdvice
+* **Arquitectura RESTful**: Diseño de una API profesional con endpoints claros y consistentes, utilizando DTOs tipados para las interacciones.
+* **Validación de Datos**: Implementación de **Bean Validation** con anotaciones para validar los datos de entrada de forma declarativa.
+* **Manejo Centralizado de Excepciones**: Uso de `@RestControllerAdvice` para gestionar y centralizar la respuesta a errores.
+* **Pruebas Unitarias Exhaustivas**: Se crearon tests con **JUnit 5 y Mockito** para cubrir la lógica de negocio del servicio y el repositorio.
+* **Métricas de Calidad**: Integración de **JaCoCo** para generar reportes detallados de la cobertura de código.
 
-Logging profesional con SLF4J
+---
 
-DTOs tipados para requests y responses
+## **Endpoints Refactorizados** 🗺️
 
-Thread-safety mejorada (ConcurrentHashMap)
+| Método | Endpoint Refactorizado | Descripción | Endpoint Original (Problema) |
+|:-------|:-----------------------|:-------------------------------------------------|:-----------------------------------|
+| `GET` | `/api/users` | Obtiene la lista completa de usuarios | `/listAll` |
+| `POST` | `/api/users` | Crea un nuevo usuario | `/createUserNow` |
+| `GET` | `/api/users/{id}`| Obtiene un usuario por su identificador único | `/user/{id}` |
+| `DELETE`| `/api/users/{id}`| Elimina un usuario por su ID | `/del/{id}` |
 
-Tests unitarios completos con JUnit 5 y Mockito
+---
 
-Reporte de cobertura con JaCoCo
+## **Resultados de la Refactorización** 📊
 
-📋 Endpoints Refactorizados
-Método	Endpoint	Descripción	Antes
-GET	/api/users	Obtener todos los usuarios	/listAll
-POST	/api/users	Crear un usuario	/createUserNow
-GET	/api/users/{id}	Obtener usuario por ID	/user/{id}
-DELETE	/api/users/{id}	Eliminar usuario	/del/{id}
-🛠 Tecnologías Utilizadas
+La refactorización no solo mejoró la calidad del código, sino que también se evidenció en métricas de cobertura y en la corrección de problemas específicos.
 
-Lenguaje: Java 17
+### **Métricas JaCoCo**
 
-Framework: Spring Boot 3.3.1
+| Módulo | Cobertura de Instrucciones | Cobertura de Métodos |
+|:---|:---|:---|
+| **UserService** | 89.7% | 100% |
+| **UserRepository**| 97.5% | 100% |
+| **Excepciones** | 100% | 100% |
 
-Pruebas: JUnit 5, Mockito
+El reporte de cobertura completo se encuentra en `target/site/jacoco/index.html`.
 
-Cobertura: JaCoCo
+### **Comparación: Antes vs. Después**
 
-Logging: SLF4J
+| Área | Problema Original | Solución Implementada |
+|:---|:---|:---|
+| **Inyección de Dependencias**| Instanciación manual (`new UserService()`) | **Inyección por constructor** con `@Autowired` |
+| **Validación de Datos**| Validación manual y repetitiva | `@Valid` + **Bean Validation** |
+| **Manejo de Excepciones**| Excepciones genéricas (`new RuntimeException()`) | **Excepciones específicas** + `@RestControllerAdvice` |
+| **Nomenclatura** | Nombres poco descriptivos (`a()`, `b()`) | **Nombres claros y semánticos** (`getAllUsers()`) |
+| **Logging**| `System.out.println()` | **SLF4J** para logging profesional |
+| **Respuestas de la API** | Retorno de `String` o `Object` | **`ResponseEntity<ApiResponse<T>>`** para respuestas estandarizadas |
 
-Validación: Jakarta Bean Validation
+---
 
-📊 Resultados de Cobertura (JaCoCo)
-Clase	Cobertura Instrucciones	Cobertura Métodos
-UserService	89.7%	100%
-UserRepository	97.5%	100%
-Excepciones	100%	100%
-Global	48.9%	—
+## **Guía de Ejecución** 🏃‍♂️
 
-Ver reporte completo: target/site/jacoco/index.html
+Para compilar, ejecutar y analizar el proyecto, sigue estos pasos.
 
-🏃‍♂️ Cómo Ejecutar
-Prerrequisitos
+### **Prerrequisitos**
 
-Java 17+
+* Java Development Kit (JDK) 17+
+* Apache Maven 3.6+
 
-Maven 3.6+
+### **Comandos Principales**
 
-Comandos Principales
-# Compilar y ejecutar tests con cobertura
+```bash
+# Compila, ejecuta los tests y genera el reporte de cobertura
 mvn clean test jacoco:report
 
-# Ejecutar solo tests unitarios
-mvn test -Dtest="*ServiceTest,*RepositoryTest"
-
-# Ejecutar la aplicación
+# Inicia la aplicación Spring Boot
 mvn spring-boot:run
-
-# Ver reporte de cobertura
-start target/site/jacoco/index.html
-
-📁 Estructura Refactorizada
-src/
-├── main/java/pe/edu/vallegrande/quality/
-│   ├── controller/
-│   │   ├── UserController.java
-│   │   └── GlobalExceptionHandler.java
-│   ├── service/
-│   │   ├── UserService.java
-│   │   └── exception/
-│   │       ├── UserNotFoundException.java
-│   │       └── UserValidationException.java
-│   ├── repository/
-│   │   └── UserRepository.java
-│   ├── model/
-│   │   └── User.java
-│   ├── dto/
-│   │   ├── UserRequest.java
-│   │   └── ApiResponse.java
-│   └── VgQualityChallengeApplication.java
-└── test/java/
-    ├── controller/UserControllerTest.java
-    ├── service/UserServiceTest.java
-    └── repository/UserRepositoryTest.java
-
-✅ Problemas Corregidos
-Problema	Antes	Después
-Inyección de dependencias	new UserService()	@Autowired constructor injection
-Validación	Manual y repetitiva	@Valid + Bean Validation
-Nombres poco descriptivos	a(), b()	getAllUsers(), createUser()
-Excepciones genéricas	RuntimeException("error")	Excepciones específicas + GlobalHandler
-Logging	System.out.println()	logger.info() con SLF4J
-Modelo	Campos públicos	Encapsulación completa (private + getters/setters)
-Respuestas	Strings simples	ResponseEntity<ApiResponse<T>>
-Thread-safety	ArrayList compartida	ConcurrentHashMap
-✨ Mejoras Implementadas
-
-Estereotipos Spring: @Service, @Repository, @RestController
-
-Inyección por constructor (@Autowired)
-
-DTOs tipados para requests/responses
-
-Validación centralizada con jakarta.validation
-
-Manejo de errores con @RestControllerAdvice
-
-Eliminación de código duplicado y valores mágicos
-
-Encapsulación completa del modelo
-
-API versionada /api/users
-
-Tests unitarios con alta cobertura
-
-Logging profesional reemplazando System.out
-
-🎉 Impacto del Refactor
-
-El código ahora es más profesional y mantenible, con:
-
-✅ Mayor legibilidad
-
-✅ Mayor robustez y manejo de errores adecuado
-
-✅ Tests confiables con alta cobertura
-
-✅ API consistente y documentada
-
-El proyecto sirve como ejemplo de refactorización integral de un microservicio Spring Boot, listo para producción.
