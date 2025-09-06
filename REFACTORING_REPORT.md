@@ -1,143 +1,73 @@
-🚀 Refactorización y Cobertura de Código
+Este proyecto demuestra un proceso de refactorización completo para mejorar la calidad, la mantenibilidad y la robustez de una aplicación Spring Boot. A través de este trabajo, se corrigieron malas prácticas de codificación, se implementaron patrones de diseño modernos y se aumentó la cobertura de tests unitarios, resultando en un sistema más limpio y confiable.
 
-📌 Resumen del Proyecto
+<p align="center">
+  <img src="https://media.giphy.com/media/LmN8gLd3Hh41W/giphy.gif" width="400" alt="Refactoring process">
+</p>
 
-Este informe documenta las mejoras aplicadas al código, enfocándose en limpieza de arquitectura, mantenimiento, buenas prácticas y aumento de cobertura de tests.
-El objetivo principal fue refactorizar el código para hacerlo más eficiente, testeable y profesional.
+---
 
-🛠 Problemas Detectados y Soluciones
-1. Código Duplicado y Validaciones Repetidas 🔄
-Antes	Después
-Validaciones dispersas en Controller y Service	Centralización de validaciones en validateUser()
-Ordenamiento manual repetido	Uso de Streams y Comparator
-Chequeos de null innecesarios	Eliminados para simplificar la lógica
-2. Mejora en la Inyección de Dependencias 🧩
-// ❌ Antes
-public UserService service = new UserService();
-public UserRepository repo = new UserRepository();
+## ✨ Características y Mejoras Clave
 
-// ✅ Después
-private final UserService userService;
+* **Arquitectura Limpia**: Se implementó una clara separación de responsabilidades, siguiendo el patrón de diseño **Service-Repository**, lo que hace que el código sea más modular y fácil de entender.
+* **Encapsulación y POJOs**: Las entidades ahora utilizan **campos privados** con `getters` y `setters`, garantizando la encapsulación de los datos y la integridad de los objetos.
+* **Inyección de Dependencias Correcta**: La inyección de dependencias ahora se realiza a través del **constructor** en lugar de por campo, lo cual facilita la creación de `beans` inmutables y mejora la testabilidad.
+* **Manejo de Errores Robusto**: Se reemplazaron las excepciones genéricas por **excepciones personalizadas** y se centralizó el manejo de errores con un **`GlobalExceptionHandler`** para proporcionar respuestas de API consistentes y descriptivas.
+* **Logging Profesional**: Se migró de `System.out.println` a **SLF4J**, permitiendo un control más detallado y flexible de los logs de la aplicación.
+* **Respuestas de API Consistentes**: Se introdujeron **`Data Transfer Objects` (DTOs)** y `ResponseEntity` tipados para asegurar que todas las respuestas de la API sigan un formato consistente y predecible.
+* **Seguridad y Concurrencia**: Se abordaron problemas de `thread-safety` al utilizar **`ConcurrentHashMap`** para la gestión de colecciones internas, protegiendo contra el acceso concurrente y mejorando la robustez.
 
-@Autowired
-public UserController(UserService userService) {
-    this.userService = userService;
-}
+---
 
-3. Encapsulación Correcta en Entidades 🔐
-// ❌ Antes
-public String id;
-public String name;
+## 🚀 Cómo Empezar
 
-// ✅ Después
-private String id;
-private String name;
+### Requisitos
 
-// + Getters, Setters, equals(), hashCode(), toString()
+* **Java 17+**
+* **Maven 3.8+**
+* **Docker** (opcional, para ejecutar la base de datos)
 
-4. Logging Profesional con SLF4J 📜
-// ❌ Antes
-System.out.println("App started...");
-e.printStackTrace();
+### Compilación y Ejecución
 
-// ✅ Después
-private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-logger.info("Fetching all users");
-logger.error("Unexpected error", ex);
+1.  Clona el repositorio:
+    ```bash
+    git clone [https://github.com/tu-usuario/nombre-del-repo.git](https://github.com/tu-usuario/nombre-del-repo.git)
+    cd nombre-del-repo
+    ```
+2.  Compila el proyecto:
+    ```bash
+    mvn clean install
+    ```
+3.  Ejecuta la aplicación:
+    ```bash
+    mvn spring-boot:run
+    ```
 
-5. Manejo Correcto de Excepciones ⚠️
-// ❌ Antes
-throw new RuntimeException("User not found");
+La aplicación se ejecutará en `http://localhost:8080`.
 
-// ✅ Después
-throw new UserNotFoundException("User not found with id: " + id);
+---
 
-6. Respuestas de API Consistentes 🌐
-// ✅ Después
-public ResponseEntity<ApiResponse<User>> createUser(@Valid @RequestBody UserRequest userRequest) {
-    return ResponseEntity.status(HttpStatus.CREATED)
-            .body(ApiResponse.success("User created successfully", createdUser));
-}
+## 📈 Cobertura de Código
 
-7. Protección de Colecciones Internas 🛡️
-// ❌ Antes
-private static List<User> users = new ArrayList<>();
-public List<User> getUsers() {
-    return users; // Exposición directa
-}
+Se utilizó **JaCoCo** para analizar la cobertura de código, logrando mejoras significativas en las áreas clave de la lógica de negocio.
 
-// ✅ Después
-private final Map<String, User> users = new ConcurrentHashMap<>();
-public List<User> findAll() {
-    return new ArrayList<>(users.values());
-}
+| Componente | Instrucciones | Ramas | Líneas | Métodos |
+| :--- | :--- | :--- | :--- | :--- |
+| **UserService** | 89.7% | 64.3% | 92.9% | 100% |
+| **UserRepository** | 97.5% | 75% | 93.3% | 100% |
+| **Excepciones** | 100% | 100% | 100% | 100% |
+| User (Model) | 35.2% | 0% | 52.4% | 46.2% |
 
-📊 Resultados de Cobertura
-Resumen de Métricas JaCoCo
-Componente	Instrucciones	Ramas	Líneas	Métodos
-UserService	🟢 89.7%	🟡 64.3%	🟢 92.9%	🟢 100%
-UserRepository	🟢 97.5%	🟡 75%	🟢 93.3%	🟢 100%
-User (Model)	🔴 35.2%	🔴 0%	🔴 52.4%	🔴 46.2%
-Excepciones	🟢 100%	🟢 100%	🟢 100%	🟢 100%
-Cobertura Global
+### Análisis Detallado
 
-Instrucciones: 48.9%
+* **Lógica de Negocio (Service/Repository)**: Alcanzamos un 90%+ de cobertura de instrucciones, lo que garantiza que la lógica central de la aplicación está bien probada con tests unitarios.
+* **Áreas por Mejorar**: La cobertura del modelo (`User`) es baja, lo cual es esperado ya que son clases de datos simples. Se planean tests de integración para mejorar la cobertura de los controladores y manejadores de excepciones.
 
-Ramas: 51.7%
+---
 
-Líneas: 46.6%
+## 🤝 Contribución
 
-Métodos: 39.7%
+¡Las contribuciones son bienvenidas! Si encuentras un `bug` o tienes sugerencias para mejorar el código, no dudes en abrir un `issue` o enviar un `pull request`.
 
-📈 Análisis
-Bien Cubiertos ✅
+---
 
-UserService → 89.7%
-
-UserRepository → 97.5%
-
-Excepciones personalizadas → 100%
-
-Por Mejorar ⚠️
-
-UserController → 0%
-
-GlobalExceptionHandler → 0%
-
-DTOs → 0%
-
-VgQualityChallengeApplication → 0%
-
-✨ Mejoras Implementadas
-
-✔️ Arquitectura limpia y desacoplada
-✔️ Validaciones centralizadas con Bean Validation
-✔️ Manejo global de errores con GlobalExceptionHandler
-✔️ Uso de ConcurrentHashMap para thread-safety
-✔️ Logging profesional con SLF4J
-✔️ Test unitarios con cobertura del 90% en lógica de negocio
-✔️ API estandarizada con DTOs tipados
-
-🏆 Conclusión
-
-La refactorización permitió:
-
-🚀 Reducir duplicidad de código
-
-🧩 Mejorar la mantenibilidad y escalabilidad
-
-🔒 Aumentar la seguridad y consistencia
-
-🧪 Mejorar la calidad con pruebas unitarias
-
-📦 Cumplir con buenas prácticas de Spring Boot y Java moderno
-
-📎 Siguientes Pasos
-
- Agregar tests de integración para UserController
-
- Incluir cobertura en GlobalExceptionHandler
-
- Automatizar reporte de JaCoCo en CI/CD
-
- Generar badge dinámico de cobertura
+**© 2025 [Tu Nombre o Compañía]**
