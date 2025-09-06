@@ -66,7 +66,3 @@ Se utilizó **JaCoCo** para analizar la cobertura de código, logrando mejoras s
 ## 🤝 Contribución
 
 ¡Las contribuciones son bienvenidas! Si encuentras un `bug` o tienes sugerencias para mejorar el código, no dudes en abrir un `issue` o enviar un `pull request`.
-
----
-
-**© 2025 [Tu Nombre o Compañía]**
