@@ -30,8 +30,7 @@ Este proyecto demuestra un proceso de refactorización completo para mejorar la 
 
 1.  Clona el repositorio:
     ```bash
-    git clone [https://github.com/tu-usuario/nombre-del-repo.git](https://github.com/tu-usuario/nombre-del-repo.git)
-    cd nombre-del-repo
+    git clone [[https://github.com/vcuaresmadev/crud_user]]
     ```
 2.  Compila el proyecto:
     ```bash
